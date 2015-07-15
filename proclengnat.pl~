@@ -68,17 +68,17 @@ articulo(m,s)--> [el];[un].
 articulo(m,p)--> [los];[unos].
 
 sustantivo(m,s,H)--> [helado];[chocolate];[carro],{unifica(H, "helado",H)}.
-sustantivo(m,p,H)--> [helados];[chocolates];[carros],{unifica(H,"helados",H)}.
-sustantivo(f,s,H)--> [camisa];[fresa];[cuchara];[cocina],{unifica(H,"camisa",H)}.
-sustantivo(f,p,H)--> [camisas];[fresas];[cucharas],{unifica(H,"camisas",H)}.
-nombre_personal(f,H)--> [ana];{unifica(H,"ana",H)}.
-nombre_personal(f,H)--> [valery],{unifica(H,"valery",H)}.
-nombre_personal(m,H)--> [carlos];[kevin],{unifica(H,"carlos",H)}.
+sustantivo(m,p,H)--> [helados];[chocolates];[carros],{H is "helados"}.
+sustantivo(f,s,H)--> [camisa];[fresa];[cuchara];[cocina],{H is "camisa"}.
+sustantivo(f,p,H)--> [camisas];[fresas];[cucharas],{H is "camisas"}.
+nombre_personal(f,H)--> [ana];{H is "ana"}.
+nombre_personal(f,H)--> [valery],{H is "valery"}.
+nombre_personal(m,H)--> [carlos];[kevin],{H is "kevin"}.
 
-adjetivo(m,s,H)--> [rico],{unifica(H,"rico",H)}.
-adjetivo(m,p,H)--> [ricos],{unifica(H,"ricos",H)}.
-adjetivo(f,s,H)--> [linda],{unifica(H,"linda",H)}.
-adjetivo(f,p,H)--> [lindas],{unifica(H,"",H)}.
+adjetivo(m,s,H)--> [rico],{H is "rico"}.
+adjetivo(m,p,H)--> [ricos],{H is "ricos"}.
+adjetivo(f,s,H)--> [linda],{H is "linda"}.
+adjetivo(f,p,H)--> [lindas],{H is "lindas"}.
 
 %agregarAGrafoElemento(R,G).
 
