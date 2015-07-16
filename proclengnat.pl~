@@ -55,7 +55,7 @@ sintagmaNominal(m,p,H)--> articulo(G,N),sustantivo(G,N,H),conjuncion,sintagmaNom
 % (nombrePersonal2(_),conjuncion,sintagmaNominal2(_,_)).
 
 
-unifica(E2,E2):-write("unificado").
+unifica(E2,E2):-write($E2).
 
 
 %agregar(H,[]).

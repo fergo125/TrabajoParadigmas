@@ -67,18 +67,34 @@ articulo(f,p)--> [las];[unas].
 articulo(m,s)--> [el];[un].
 articulo(m,p)--> [los];[unos].
 
-sustantivo(m,s,E)--> [helado];[chocolate];[carro],{unifica(E, "helado")}.
-sustantivo(m,p,E)--> [helados];[chocolates];[carros],{unifica(E,"helados")}.
-sustantivo(f,s,E)--> [camisa];[fresa];[cuchara];[cocina],{unifica(E,"camisa")}.
-sustantivo(f,p,E)--> [camisas];[fresas];[cucharas],{unifica(E,"camisas")}.
+sustantivo(m,s,E)--> [helado],{unifica(E, "helado")}.
+sustantivo(m,s,E)--> [chocolate],{unifica(E, "chocolate")}.
+sustantivo(m,s,E)--> [carro],{unifica(E, "carro")}.
+
+sustantivo(m,p,E)--> [helados],{unifica(E,"helados")}.
+sustantivo(m,p,E)--> [chocolates],{unifica(E,"chocolates")}.
+sustantivo(m,p,E)--> [carros],{unifica(E,"carros")}.
+
+sustantivo(f,s,E)--> [camisa],{unifica(E,"camisa")}.
+sustantivo(f,s,E)--> [fresa],{unifica(E,"fresa")}.
+sustantivo(f,s,E)--> [cuchara],{unifica(E,"cuchara")}.
+sustantivo(f,s,E)--> [cocina],{unifica(E,"cocina")}.
+
+sustantivo(f,p,E)--> [camisas],{unifica(E,"camisas")}.
+sustantivo(f,p,E)--> [fresas],{unifica(E,"fresas")}.
+sustantivo(f,p,E)--> [cucharas],{unifica(E,"cucharas")}.
+sustantivo(f,p,E)--> [cocinas],{unifica(E,"cocinas")}.
+
+
 nombre_personal(f,E)--> [ana];{unifica(E,"ana")}.
 nombre_personal(f,E)--> [valery],{unifica(E,"valery")}.
-nombre_personal(m,E)--> [carlos];[kevin],{unifica(E,"carlos")}.
+nombre_personal(m,E)--> [carlos],{unifica(E,"carlos")}.
+nombre_personal(m,E)--> [kevin],{unifica(E,"kevin")}.
 
 adjetivo(m,s,E)--> [rico],{unifica(E,"rico")}.
 adjetivo(m,p,E)--> [ricos],{unifica(E,"ricos")}.
 adjetivo(f,s,E)--> [linda],{unifica(E,"linda")}.
-adjetivo(f,p,E)--> [lindas],{unifica(E,"")}.
+adjetivo(f,p,E)--> [lindas],{unifica(E,"lindas")}.
 
 %agregarAGrafoElemento(R,G).
 
@@ -99,24 +115,43 @@ verboE(_,p,E)--> [corren];[caminan],{unifica(E,"corren")}.
 
 predicado_directo(H)--> sintagmaNominal(_,_,H).
 
-%ana y carlos comen
-%ana y carlos comen un helado rico
-%kevin y valery comen helado de fresa
-%kevin y valery comen helado con cuchara
-%carlos y ana tienen una camisa linda
 predicadoS(H)--> predicado_directo(H).
 predicadoS(H)--> predicado_indirectoS(H).
 predicadoS(H)--> predicado_directo(H),predicado_indirectoS(H).
 predicado_indirectoS(H)--> sintagmaNominal(_,_,H), preposicionS(H), sintagmaNominal(_,_,H).
-%kevin y valery corren en la cocina
-%Kevin y ana corren desde la cocina
-%carlos y valery caminan hacia los carros
+
 predicadoE(H)--> predicado_indirectoE(H).
 predicado_indirectoE(H)--> preposicionE(H), sintagmaNominal(_,_,H).
-preposicionS(E)--> [de];[con];[en],{unifica(E,"come")}.
-preposicionE(E)--> [desde];[hacia];[en],{unifica(E,"come")}.
 
+%Preposiciones Referencia
+preposicionS(E)--> [de],{unifica(E,"de")}.
+preposicionS(E)--> [con],{unifica(E,"con")}.
+preposicionS(E)--> [en],{unifica(E,"en")}.
 
+%Preposiciones Espaciales
+preposicionE(E)--> [desde];[hacia];[en],{unifica(E,"desde")}.
+preposicionE(E)--> [hacia],{unifica(E,"hacia")}.
+preposicionE(E)--> [en],{unifica(E,"en")}.
+
+%%%
+%
+% Ejemplos oraciones simples:
+%
+% ana y carlos comen
+% ana y carlos comen un helado rico
+%
+% Ejemplos con preposiones de referencia:
+%
+% kevin y valery comen helado de fresa
+% kevin y valery comen helado con cuchara
+% carlos y ana tienen una camisa linda
+%
+% Ejemplos con preposiones de espaciales:
+% kevin y valery corren en la cocina
+% Kevin y ana corren desde la cocina
+% carlos y valery caminan hacia los carros
+%
+%%%
 
 
 
