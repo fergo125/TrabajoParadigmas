@@ -185,7 +185,7 @@ concatena2(X-Y,Y-Z,X-Z).	% la lista [a,b,..] se escribe como [a,b,..|R]-R
 %     las instancias de Viejo con Nuevo en la lista L1
 
 reemplaza(_,[],_,[]).			% lista vacía: no hay nada que hacer
-reemplaza(V,[X|R1],N,[N|R2]) :- 	% si el objeto a reemplazar es la cabeza
+reemplaza(V,[X|R1],N,[N|R2]) :-		% si el objeto a reemplazar es la cabeza
    nonvar(X), X = V, !,			% se reemplaza
    reemplaza(V, R1, N, R2).		% y se recorre el resto de la lista
 reemplaza(V,[X|R1],N,[X|R2]) :-		% en otro caso, se deja intacta,

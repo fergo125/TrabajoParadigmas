@@ -36,12 +36,14 @@
 % grafo([a,b,c,d,e,g,h],[arco(a,b), arco(a,d),
 % arco(b,d),arco(d,g,)marco(e,h)],C).
 
+:-[grafos].
+
 oracion-->sintagmaNominal(G,N,H),sintagmaVerbal(G,N,H).  %G: genero y N: numero
 
 %analisisProlog(X):-oracion(X,[]).
-% analisisProlog():-oracion([kevin, y, valery,comen,helado,en,la,
-% cocina],H), oracion2([a, y, valery,comen,helado,en,la, cocina],[]).
-sintagmaNominal(G,N,H)--> nombre_personal(G,H);sustantivo(G,N,H).
+%analisisProlog():-oracion([kevin, y, valery,comen,helado,en,la,
+%cocina],H), oracion2([a, y, valery,comen,helado,en,la, cocina],[]).
+sintagmaNominal(G,N,H)--> (nombre_personal(G,E), {agregarAGrafo(E,H)});sustantivo(G,N,H).
 sintagmaNominal(G,N,H)--> articulo(G,N),sustantivo(G,N,H).
 sintagmaNominal(G,N,H)--> sustantivo(G,N,H), adjetivo(G,N,H).
 sintagmaNominal(G,N,H)--> articulo(G,N), adjetivo(G,N,H),sustantivo(G,N,H).
@@ -53,9 +55,7 @@ sintagmaNominal(m,p,H)--> articulo(G,N),sustantivo(G,N,H),conjuncion,sintagmaNom
 % (nombrePersonal2(_),conjuncion,sintagmaNominal2(_,_)).
 
 
-:-dynamic arco/2.
-
-unifica(E1,E2,E2).
+unifica(E2,E2):-write("unificado").
 
 
 %agregar(H,[]).
@@ -67,18 +67,18 @@ articulo(f,p)--> [las];[unas].
 articulo(m,s)--> [el];[un].
 articulo(m,p)--> [los];[unos].
 
-sustantivo(m,s,H)--> [helado];[chocolate];[carro],{unifica(H, "helado",H)}.
-sustantivo(m,p,H)--> [helados];[chocolates];[carros],{H is "helados"}.
-sustantivo(f,s,H)--> [camisa];[fresa];[cuchara];[cocina],{H is "camisa"}.
-sustantivo(f,p,H)--> [camisas];[fresas];[cucharas],{H is "camisas"}.
-nombre_personal(f,H)--> [ana];{H is "ana"}.
-nombre_personal(f,H)--> [valery],{H is "valery"}.
-nombre_personal(m,H)--> [carlos];[kevin],{H is "kevin"}.
+sustantivo(m,s,E)--> [helado];[chocolate];[carro],{unifica(E, "helado")}.
+sustantivo(m,p,E)--> [helados];[chocolates];[carros],{unifica(E,"helados")}.
+sustantivo(f,s,E)--> [camisa];[fresa];[cuchara];[cocina],{unifica(E,"camisa")}.
+sustantivo(f,p,E)--> [camisas];[fresas];[cucharas],{unifica(E,"camisas")}.
+nombre_personal(f,E)--> [ana];{unifica(E,"ana")}.
+nombre_personal(f,E)--> [valery],{unifica(E,"valery")}.
+nombre_personal(m,E)--> [carlos];[kevin],{unifica(E,"carlos")}.
 
-adjetivo(m,s,H)--> [rico],{H is "rico"}.
-adjetivo(m,p,H)--> [ricos],{H is "ricos"}.
-adjetivo(f,s,H)--> [linda],{H is "linda"}.
-adjetivo(f,p,H)--> [lindas],{H is "lindas"}.
+adjetivo(m,s,E)--> [rico],{unifica(E,"rico")}.
+adjetivo(m,p,E)--> [ricos],{unifica(E,"ricos")}.
+adjetivo(f,s,E)--> [linda],{unifica(E,"linda")}.
+adjetivo(f,p,E)--> [lindas],{unifica(E,"")}.
 
 %agregarAGrafoElemento(R,G).
 
@@ -92,10 +92,10 @@ conjuncion--> [y];[o].
 sintagmaVerbal(G,N,H)-->(verboS(G,N,H));(verboE(G,N,H)).
 sintagmaVerbal(G,N,H)-->(verboS(G,N,H),predicadoS(H));(verboE(G,N,H),predicadoE(H)).
 
-verboS(_,s,H)--> [come];[tiene],{H is "come"}.
-verboS(_,p,H)--> [comen];[tienen],{H is "comen"}.
-verboE(_,s,H)--> [corre];[camina],{H is "corre"}.
-verboE(_,p,H)--> [corren];[caminan],{H is "corren"}.
+verboS(_,s,E)--> [come];[tiene],{unifica(E,"come")}.
+verboS(_,p,E)--> [comen];[tienen],{unifica(E,"comen")}.
+verboE(_,s,E)--> [corre];[camina],{unifica(E,"corre")}.
+verboE(_,p,E)--> [corren];[caminan],{unifica(E,"corren")}.
 
 predicado_directo(H)--> sintagmaNominal(_,_,H).
 
@@ -113,8 +113,18 @@ predicado_indirectoS(H)--> sintagmaNominal(_,_,H), preposicionS(H), sintagmaNomi
 %carlos y valery caminan hacia los carros
 predicadoE(H)--> predicado_indirectoE(H).
 predicado_indirectoE(H)--> preposicionE(H), sintagmaNominal(_,_,H).
-preposicionS(H)--> [de];[con];[en],{H is "de"}.
-preposicionE(H)--> [desde];[hacia];[en],{H is "desde"}.
+preposicionS(E)--> [de];[con];[en],{unifica(E,"come")}.
+preposicionE(E)--> [desde];[hacia];[en],{unifica(E,"come")}.
+
+
+
+
+
+
+
+
+
+
 
 
 
